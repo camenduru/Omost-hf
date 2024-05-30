@@ -120,9 +120,11 @@ def resize_without_crop(image, target_width, target_height):
     return np.array(resized_image)
 
 
-@spaces.GPU
+@spaces.GPU(duration=120)
 @torch.inference_mode()
 def chat_fn(message: str, history: list, seed:int, temperature: float, top_p: float, max_new_tokens: int) -> str:
+    print('Chat begin:', message)
+
     np.random.seed(int(seed))
     torch.manual_seed(int(seed))
 
@@ -160,6 +162,7 @@ def chat_fn(message: str, history: list, seed:int, temperature: float, top_p: fl
         # print(outputs)
         yield "".join(outputs)
 
+    print('Chat end:', message)
     return
 
 
@@ -175,6 +178,7 @@ def post_chat(history):
     except Exception as e:
         print('Last assistant response is not valid canvas:', e)
 
+    print('Canvas detection', canvas_outputs is not None)
     return canvas_outputs, gr.update(visible=canvas_outputs is not None)
 
 
