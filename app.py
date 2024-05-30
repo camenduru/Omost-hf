@@ -1,18 +1,3 @@
-# import gradio as gr
-#
-# import torch
-#
-# zero = torch.Tensor([0]).cuda()
-# print(zero.device) # <-- 'cpu' 🤔
-#
-# @spaces.GPU
-# def greet(n):
-#     print(zero.device) # <-- 'cuda:0' 🤗
-#     return f"Hello {zero + n} Tensor"
-#
-# demo = gr.Interface(fn=greet, inputs=gr.Number(), outputs=gr.Text())
-# demo.launch()
-
 import os
 import spaces
 
@@ -174,15 +159,15 @@ def post_chat(history):
     canvas_outputs = None
 
     try:
-        history = [(user, assistant) for user, assistant in history if isinstance(user, str) and isinstance(assistant, str)]
-        last_assistant = history[-1][1] if len(history) > 0 else None
-        canvas = omost_canvas.Canvas.from_bot_response(last_assistant)
-        canvas_outputs = canvas.process()
+        if history:
+            history = [(user, assistant) for user, assistant in history if isinstance(user, str) and isinstance(assistant, str)]
+            last_assistant = history[-1][1] if len(history) > 0 else None
+            canvas = omost_canvas.Canvas.from_bot_response(last_assistant)
+            canvas_outputs = canvas.process()
     except Exception as e:
         print('Last assistant response is not valid canvas:', e)
 
-    print('Canvas detection', canvas_outputs is not None)
-    return canvas_outputs, gr.update(visible=canvas_outputs is not None)
+    return canvas_outputs, gr.update(visible=canvas_outputs is not None), gr.update(interactive=len(history) > 0)
 
 
 @spaces.GPU
@@ -290,9 +275,9 @@ with gr.Blocks(
     with gr.Row(elem_classes='outer_parent'):
         with gr.Column(scale=25):
             with gr.Row():
-                retry_btn = gr.Button("🔄 Retry", variant="secondary", size="sm", min_width=60)
-                undo_btn = gr.Button("↩️ Undo", variant="secondary", size="sm", min_width=60)
-                clear_btn = gr.Button("⭐️ New Chat", variant="secondary", size="sm", min_width=60)
+                clear_btn = gr.Button("➕ New Chat", variant="secondary", size="sm", min_width=60)
+                retry_btn = gr.Button("Retry", variant="secondary", size="sm", min_width=60, visible=False)
+                undo_btn = gr.Button("✏️️ Edit Last Input", variant="secondary", size="sm", min_width=60, interactive=False)
 
             seed = gr.Number(label="Random Seed", value=123456, precision=0)
 
@@ -358,7 +343,7 @@ with gr.Blocks(
             chatInterface = ChatInterface(
                 fn=chat_fn,
                 post_fn=post_chat,
-                post_fn_kwargs=dict(inputs=[chatbot], outputs=[canvas_state, render_button]),
+                post_fn_kwargs=dict(inputs=[chatbot], outputs=[canvas_state, render_button, undo_btn]),
                 pre_fn=lambda: gr.update(visible=False),
                 pre_fn_kwargs=dict(outputs=[render_button]),
                 chatbot=chatbot,
@@ -380,4 +365,4 @@ with gr.Blocks(
         ], outputs=[chatInterface.chatbot_state])
 
 if __name__ == "__main__":
-    demo.queue().launch(inbrowser=True, server_name='0.0.0.0')
+    demo.queue().launch()
