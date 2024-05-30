@@ -86,9 +86,10 @@ llm_name = 'lllyasviel/omost-llama-3-8b'
 
 llm_model = AutoModelForCausalLM.from_pretrained(
     llm_name,
-    torch_dtype=torch.bfloat16,  # This is computation type, not load/memory type. The loading quant type is baked in config.
+    torch_dtype="auto",
     token=HF_TOKEN,
-    device_map="auto"
+    device_map="auto",
+    trust_remote_code=True,
 )
 
 llm_tokenizer = AutoTokenizer.from_pretrained(
