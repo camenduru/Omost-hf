@@ -340,7 +340,7 @@ with gr.Blocks(fill_height=True, css=css) as demo:
             with gr.Row():
                 gr.Markdown("Omost: converting LLM's coding capability to image compositing capability.")
             with gr.Row():
-                gr.Markdown("See also local version (8GB VRAM): https://github.com/lllyasviel/Omost")
+                gr.Markdown("Local version (8GB VRAM): https://github.com/lllyasviel/Omost")
             with gr.Row():
                 gr.Markdown("Note that you can only occupy zero GPU 170 seconds every 5 minutes. If connection error out, wait 5 minites and try again.")
 
