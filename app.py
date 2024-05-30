@@ -272,7 +272,7 @@ def diffusion_fn(chatbot, canvas_outputs, num_samples, seed, image_width, image_
 css = '''
 code {white-space: pre-wrap !important;}
 .gradio-container {max-width: none !important;}
-iframe {max-width: none !important;}
+.container {max-width: none !important;}
 .outer_parent {flex: 1;}
 .inner_parent {flex: 1;}
 footer {display: none !important; visibility: hidden !important;}
