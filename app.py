@@ -133,7 +133,7 @@ def chat_fn(message: str, history: list, seed:int, temperature: float, top_p: fl
 
     def interactive_stopping_criteria(input_ids: torch.LongTensor, score: torch.FloatTensor, **kwargs) -> bool:
         if getattr(streamer, 'user_interrupted', False):
-            print('User stopped generation')
+            print('User stopped generation:', message)
             return True
         else:
             return False
