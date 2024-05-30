@@ -168,11 +168,11 @@ def chat_fn(message: str, history: list, seed:int, temperature: float, top_p: fl
 
 @torch.inference_mode()
 def post_chat(history):
-    history = [(user, assistant) for user, assistant in history if isinstance(user, str) and isinstance(assistant, str)]
-    last_assistant = history[-1][1]
     canvas_outputs = None
 
     try:
+        history = [(user, assistant) for user, assistant in history if isinstance(user, str) and isinstance(assistant, str)]
+        last_assistant = history[-1][1] if len(history) > 0 else None
         canvas = omost_canvas.Canvas.from_bot_response(last_assistant)
         canvas_outputs = canvas.process()
     except Exception as e:
@@ -286,7 +286,7 @@ with gr.Blocks(fill_height=True, css=css) as demo:
                 undo_btn = gr.Button("↩️ Undo", variant="secondary", size="sm", min_width=60)
                 clear_btn = gr.Button("⭐️ New Chat", variant="secondary", size="sm", min_width=60)
 
-            seed = gr.Number(label="Random Seed", value=12345, precision=0)
+            seed = gr.Number(label="Random Seed", value=123456, precision=0)
 
             with gr.Accordion(open=True, label='Language Model'):
                 with gr.Group():
