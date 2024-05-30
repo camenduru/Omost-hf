@@ -366,7 +366,8 @@ with gr.Blocks(
                 undo_btn=undo_btn,
                 clear_btn=clear_btn,
                 additional_inputs=[seed, temperature, top_p, max_new_tokens],
-                examples=examples
+                examples=examples,
+                show_stop_button=False
             )
 
     render_button.click(

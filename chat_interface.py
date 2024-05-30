@@ -57,6 +57,7 @@ class ChatInterface(Blocks):
         pre_fn: Callable,
         chatbot: Chatbot,
         *,
+        show_stop_button=True,
         post_fn_kwargs: dict = None,
         pre_fn_kwargs: dict = None,
         multimodal: bool = False,
@@ -102,6 +103,8 @@ class ChatInterface(Blocks):
 
         self.pre_fn = pre_fn
         self.pre_fn_kwargs = pre_fn_kwargs
+
+        self.show_stop_button = show_stop_button
 
         self.interrupter = State(None)
 
@@ -409,7 +412,7 @@ class ChatInterface(Blocks):
                         async_lambda(
                             lambda: (
                                 Button(visible=False),
-                                Button(visible=True),
+                                Button(visible=self.show_stop_button),
                             )
                         ),
                         None,
@@ -427,7 +430,7 @@ class ChatInterface(Blocks):
             else:
                 for event_trigger in event_triggers:
                     event_trigger(
-                        async_lambda(lambda: Button(visible=True)),
+                        async_lambda(lambda: Button(visible=self.show_stop_button)),
                         None,
                         [self.stop_btn],
                         show_api=False,
