@@ -163,7 +163,7 @@ def chat_fn(message: str, history: list, seed:int, temperature: float, top_p: fl
     for text in streamer:
         outputs.append(text)
         # print(outputs)
-        yield "".join(outputs), interrupter
+        yield "".join(outputs), None
 
     print(f'Chat end at {time.time() - time_stamp:.2f} seconds:', message)
     return
