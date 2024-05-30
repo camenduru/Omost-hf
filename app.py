@@ -120,7 +120,7 @@ def resize_without_crop(image, target_width, target_height):
     return np.array(resized_image)
 
 
-@spaces.GPU(duration=180)
+@spaces.GPU(duration=120)
 @torch.inference_mode()
 def chat_fn(message: str, history: list, seed:int, temperature: float, top_p: float, max_new_tokens: int) -> str:
     print('Chat begin:', message)
