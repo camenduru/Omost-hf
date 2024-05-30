@@ -79,9 +79,9 @@ pipeline = StableDiffusionXLOmostPipeline(
 
 # LLM
 
-# model_name = 'lllyasviel/omost-phi-3-mini-128k-8bits'
-llm_name = 'lllyasviel/omost-llama-3-8b-4bits'
-# model_name = 'lllyasviel/omost-dolphin-2.9-llama3-8b-4bits'
+# model_name = 'lllyasviel/omost-phi-3-mini-128k'
+llm_name = 'lllyasviel/omost-llama-3-8b'
+# model_name = 'lllyasviel/omost-dolphin-2.9-llama3-8b'
 
 llm_model = AutoModelForCausalLM.from_pretrained(
     llm_name,
@@ -268,6 +268,7 @@ def diffusion_fn(chatbot, canvas_outputs, num_samples, seed, image_width, image_
 css = '''
 code {white-space: pre-wrap !important;}
 .gradio-container {max-width: none !important;}
+iframe {max-width: none !important;}
 .outer_parent {flex: 1;}
 .inner_parent {flex: 1;}
 footer {display: none !important; visibility: hidden !important;}
