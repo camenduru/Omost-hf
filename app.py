@@ -328,6 +328,13 @@ with gr.Blocks(fill_height=True, css=css) as demo:
 
             render_button = gr.Button("Render the Image!", size='lg', variant="primary", visible=False)
 
+            with gr.Row():
+                gr.Markdown("Omost: converting LLM's coding capability to image compositing capability.")
+            with gr.Row():
+                gr.Markdown("See also local version (8GB VRAM): https://github.com/lllyasviel/Omost")
+            with gr.Row():
+                gr.Markdown("Note that you can only occupy zero GPU 170 seconds every 5 minutes. If connection error out, wait 5 minites and try again.")
+
             examples = gr.Dataset(
                 samples=[
                     ['generate an image of the fierce battle of warriors and a dragon'],
@@ -337,12 +344,6 @@ with gr.Blocks(fill_height=True, css=css) as demo:
                 label='Quick Prompts'
             )
 
-            with gr.Row():
-                gr.Markdown("Omost: converting LLM's coding capability to image compositing capability.")
-            with gr.Row():
-                gr.Markdown("See also local version (8GB VRAM): https://github.com/lllyasviel/Omost")
-            with gr.Row():
-                gr.Markdown("Note that you can only occupy zero GPU 170 seconds every 5 minutes. If connection error out, wait 5 minites and try again.")
         with gr.Column(scale=75, elem_classes='inner_parent'):
             canvas_state = gr.State(None)
             chatbot = gr.Chatbot(label='Omost', scale=1, bubble_full_width=True, render=False)
