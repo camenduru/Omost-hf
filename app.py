@@ -20,6 +20,7 @@ os.environ['HF_HOME'] = os.path.join(os.path.dirname(__file__), 'hf_download')
 HF_TOKEN = os.environ['hf_token'] if 'hf_token' in os.environ else None
 
 import uuid
+import time
 import torch
 import numpy as np
 import gradio as gr
@@ -124,6 +125,7 @@ def resize_without_crop(image, target_width, target_height):
 @torch.inference_mode()
 def chat_fn(message: str, history: list, seed:int, temperature: float, top_p: float, max_new_tokens: int) -> str:
     print('Chat begin:', message)
+    time_stamp = time.time()
 
     np.random.seed(int(seed))
     torch.manual_seed(int(seed))
@@ -162,7 +164,7 @@ def chat_fn(message: str, history: list, seed:int, temperature: float, top_p: fl
         # print(outputs)
         yield "".join(outputs)
 
-    print('Chat end:', message)
+    print(f'Chat end at {time.time() - time_stamp:.2f} seconds:', message)
     return
 
 
