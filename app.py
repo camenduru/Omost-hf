@@ -345,7 +345,7 @@ with gr.Blocks(fill_height=True, css=css) as demo:
             with gr.Row():
                 gr.Markdown("Local version (8GB VRAM): https://github.com/lllyasviel/Omost")
             with gr.Row():
-                gr.Markdown("Note that you can only occupy zero GPU 170 seconds every 5 minutes. If connection error out, wait 5 minites and try again.")
+                gr.Markdown("Note that you can only occupy HuggingFace zero GPU 170 seconds every 5 minutes. If connection error out, wait 5 minites and try again.")
 
         with gr.Column(scale=75, elem_classes='inner_parent'):
             canvas_state = gr.State(None)
